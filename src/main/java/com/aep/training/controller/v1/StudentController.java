@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(ApiConstant.ROOT+"/students")
+//@InnovaRequestMapping("/students") --> ÖDEV
 public class StudentController {
 
     private StudentService studentService;
