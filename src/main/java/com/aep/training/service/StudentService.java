@@ -15,4 +15,5 @@ public interface StudentService {
 
     boolean isExist(Long studentId);
 
+    long getCount();
 }

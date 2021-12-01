@@ -34,15 +34,21 @@ public class StudentController {
         Student foundStudent = this.studentService.getById(studentId);
         return foundStudent;
     }
-/*
-    @GetMapping("/{studentId}?operation=")
-    public boolean isExist(@PathVariable("studentId") Long studentId,String operation) throws Exception {
+
+    @GetMapping("/{studentId}/")
+    public boolean isExist(@PathVariable("studentId") Long studentId,@RequestParam("operation") String operation) throws Exception {
        if("ec".equals(operation))
          return this.studentService.isExist(studentId);
 
        return false;
     }
-    */
+
+    @GetMapping("/")
+    public long getCount(@RequestParam("operation") String operation) throws Exception {
+        if("count".equals(operation))
+            return this.studentService.getCount();
+        return 0;
+    }
 
     @PutMapping
     public Student update(@RequestBody Student student) throws Exception {

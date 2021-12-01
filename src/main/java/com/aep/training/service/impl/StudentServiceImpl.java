@@ -60,4 +60,9 @@ public class StudentServiceImpl implements StudentService {
     public boolean isExist(Long studentId) {
         return this.studentRepository.existsById(studentId);
     }
+
+    @Override
+    public long getCount() {
+        return this.studentRepository.count();
+    }
 }
