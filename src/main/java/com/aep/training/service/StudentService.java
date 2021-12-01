@@ -16,4 +16,8 @@ public interface StudentService {
     boolean isExist(Long studentId);
 
     long getCount();
+
+    Student getByName(String queryData);
+
+    List<Student> getAllBySurname(String queryData);
 }

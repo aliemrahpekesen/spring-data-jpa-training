@@ -5,6 +5,7 @@ import com.aep.training.service.StudentService;
 import com.aep.training.util.ApiConstant;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,6 +34,17 @@ public class StudentController {
     public Student getById(@PathVariable("studentId") Long studentId) throws Exception {
         Student foundStudent = this.studentService.getById(studentId);
         return foundStudent;
+    }
+
+    @GetMapping("/search")
+    public List<Student> search(@RequestParam("sc") String searchCriteria,@RequestParam("q") String queryData) throws Exception {
+        List<Student> resultList = new ArrayList<>();
+        if("name".equals(searchCriteria)){
+            resultList.add(this.studentService.getByName(queryData));
+        } else if("surname".equals(searchCriteria)){
+            resultList =this.studentService.getAllBySurname(queryData);
+        }
+        return resultList;
     }
 
     @GetMapping("/{studentId}/")

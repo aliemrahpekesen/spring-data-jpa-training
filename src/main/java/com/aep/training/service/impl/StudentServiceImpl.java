@@ -65,4 +65,14 @@ public class StudentServiceImpl implements StudentService {
     public long getCount() {
         return this.studentRepository.count();
     }
+
+    @Override
+    public Student getByName(String queryData) {
+        return this.studentRepository.findByName(queryData);
+    }
+
+    @Override
+    public List<Student> getAllBySurname(String queryData) {
+        return this.studentRepository.findAllBySurname(queryData);
+    }
 }
