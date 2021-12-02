@@ -2,6 +2,7 @@ package com.aep.training.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -20,5 +21,6 @@ public class Book {
 
     @OneToOne(mappedBy = "book")
     @JsonBackReference
+    @ToString.Exclude
     private Student student;
 }
