@@ -1,11 +1,10 @@
 package com.aep.training.service.impl;
 
 import com.aep.training.domain.entity.Book;
-import com.aep.training.domain.entity.OpLog;
 import com.aep.training.domain.entity.Student;
 import com.aep.training.repository.BookRepository;
-import com.aep.training.repository.OpLogRepository;
 import com.aep.training.repository.StudentRepository;
+import com.aep.training.service.LogService;
 import com.aep.training.service.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +17,12 @@ public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
     private BookRepository bookRepository;
-    private OpLogRepository opLogRepository;
+    private LogService logService;
 
-    public StudentServiceImpl(StudentRepository studentRepository, BookRepository bookRepository, OpLogRepository opLogRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, BookRepository bookRepository, LogService logService) {
         this.studentRepository = studentRepository;
         this.bookRepository = bookRepository;
-        this.opLogRepository = opLogRepository;
+        this.logService = logService;
     }
 
     @Override
@@ -42,11 +41,7 @@ public class StudentServiceImpl implements StudentService {
         java.setAuthor("Uncle Bob");
         student.setBook(java);
 
-        OpLog opLog = new OpLog();
-        opLog.setOperation("CREATE_OR_UPDATE-STUDENT_WITH_BOOK");
-        opLog.setLogMessage("Student and Book Created! Book Name : " + java.getName() + ", Student Name : " + student.getName());
-
-        this.opLogRepository.save(opLog);
+        this.logService.createLog(java,student);
 
         Student createdStudent = this.studentRepository.save(student);
         return createdStudent;
