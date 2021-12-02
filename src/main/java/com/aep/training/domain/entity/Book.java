@@ -6,16 +6,16 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Student {
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String isbn;
     private String name;
-    private String surname;
+    private String author;
 
-    @OneToOne
-    @JoinColumn(name = "book_id",referencedColumnName = "id")
-    private Book book;
+    @OneToOne(mappedBy = "book")
+    private Student student;
 }

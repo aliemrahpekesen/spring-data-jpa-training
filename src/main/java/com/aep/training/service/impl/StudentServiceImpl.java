@@ -1,6 +1,8 @@
 package com.aep.training.service.impl;
 
+import com.aep.training.domain.entity.Book;
 import com.aep.training.domain.entity.Student;
+import com.aep.training.repository.BookRepository;
 import com.aep.training.repository.StudentRepository;
 import com.aep.training.service.StudentService;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,11 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
     
     private StudentRepository studentRepository;
+    private BookRepository bookRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository,BookRepository bookRepository) {
         this.studentRepository = studentRepository;
+        this.bookRepository = bookRepository;
     }
     
     @Override
@@ -27,7 +31,16 @@ public class StudentServiceImpl implements StudentService {
             else
                 throw new Exception("Resource Not Found");
         }
-        Student createdStudent = this.studentRepository.save(student);
+            Book java= new Book();
+            java.setIsbn("123456");
+            java.setName("Java");
+            java.setAuthor("Martin Fowler");
+
+            java = this.bookRepository.save(java);
+
+            student.setBook(java);
+
+        Student createdStudent =   this.studentRepository.save(student);
         return createdStudent;
     }
 
