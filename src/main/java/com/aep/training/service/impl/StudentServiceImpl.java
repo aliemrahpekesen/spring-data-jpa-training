@@ -32,12 +32,9 @@ public class StudentServiceImpl implements StudentService {
                 throw new Exception("Resource Not Found");
         }
             Book java= new Book();
-            java.setIsbn("123456");
-            java.setName("Java");
-            java.setAuthor("Martin Fowler");
-
-            this.bookRepository.save(java);
-
+            java.setIsbn("654321");
+            java.setName("Java2");
+            java.setAuthor("Uncle Bob");
             student.setBook(java);
 
         Student createdStudent =   this.studentRepository.save(student);
