@@ -1,6 +1,5 @@
 package com.aep.training.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,14 +10,12 @@ import javax.persistence.*;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
+    @SequenceGenerator(name = "book_seq",sequenceName = "book_sequence")
     private Long id;
 
     private String isbn;
     private String name;
     private String author;
 
-    @OneToOne(mappedBy = "book")
-    @JsonBackReference
-    private Student student;
 }

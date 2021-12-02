@@ -1,6 +1,5 @@
 package com.aep.training.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,7 +10,8 @@ import javax.persistence.*;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_seq")
+    @SequenceGenerator(name = "student_seq",sequenceName = "student_sequence")
     private Long id;
 
     private String name;
@@ -21,6 +21,5 @@ public class Student {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id",referencedColumnName = "id")
-    @JsonManagedReference
     private Book book;
 }
