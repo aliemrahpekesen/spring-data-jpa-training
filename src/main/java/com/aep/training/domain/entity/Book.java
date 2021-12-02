@@ -1,10 +1,7 @@
 package com.aep.training.domain.entity;
 
-import lombok.Data;
-
 import javax.persistence.*;
 
-@Data
 @Entity
 public class Book {
 
@@ -18,4 +15,35 @@ public class Book {
 
     @OneToOne(mappedBy = "book")
     private Student student;
+
+    public Book() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 }
