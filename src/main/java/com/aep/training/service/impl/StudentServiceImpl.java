@@ -9,6 +9,7 @@ import com.aep.training.service.StudentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,11 +38,21 @@ public class StudentServiceImpl implements StudentService {
         }
         Book java = new Book();
         java.setIsbn("654321");
-        java.setName("Java2");
+        java.setName("Clean Code");
         java.setAuthor("Uncle Bob");
-        student.setBook(java);
 
-        this.logService.createLog(java,student);
+        Book foo = new Book();
+        foo.setIsbn("123456");
+        foo.setName("Foo");
+        foo.setAuthor("John Doe");
+
+        List<Book> studentBooks = new ArrayList<>();
+        studentBooks.add(java);
+        studentBooks.add(foo);
+
+        student.setBooks(studentBooks);
+
+        this.logService.createLog(studentBooks,student);
 
         Student createdStudent = this.studentRepository.save(student);
         return createdStudent;

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class LogServiceImpl implements LogService {
 
@@ -26,5 +29,18 @@ public class LogServiceImpl implements LogService {
         opLog.setLogMessage("Student and Book Created! Book Name : " + book.getName() + ", Student Name : " + student.getName());
 
         this.opLogRepository.save(opLog);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createLog(List<Book> bookList, Student student) {
+        List<OpLog> allLogs = new ArrayList<>();
+        for (Book book : bookList ) {
+            OpLog opLog = new OpLog();
+            opLog.setOperation("CREATE_OR_UPDATE-STUDENT_WITH_BOOK");
+            opLog.setLogMessage("Student and Book Created! Book Name : " + book.getName() + ", Student Name : " + student.getName());
+            allLogs.add(opLog);
+        }
+        this.opLogRepository.saveAll(allLogs);
     }
 }

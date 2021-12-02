@@ -3,6 +3,8 @@ package com.aep.training.domain.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,7 +21,10 @@ public class Student {
     @Column(nullable = false)
     private String surname;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id",referencedColumnName = "id")
-    private Book book;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name="student_id")
+    private List<Book> books = new ArrayList<>();
 }
