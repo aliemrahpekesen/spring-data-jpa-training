@@ -1,43 +1,54 @@
 package com.aep.training.service.impl;
 
 import com.aep.training.domain.entity.Book;
+import com.aep.training.domain.entity.OpLog;
 import com.aep.training.domain.entity.Student;
 import com.aep.training.repository.BookRepository;
+import com.aep.training.repository.OpLogRepository;
 import com.aep.training.repository.StudentRepository;
 import com.aep.training.service.StudentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    
+
     private StudentRepository studentRepository;
     private BookRepository bookRepository;
+    private OpLogRepository opLogRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository,BookRepository bookRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, BookRepository bookRepository, OpLogRepository opLogRepository) {
         this.studentRepository = studentRepository;
         this.bookRepository = bookRepository;
+        this.opLogRepository = opLogRepository;
     }
-    
+
     @Override
+    @Transactional
     public Student createOrUpdate(Student student) throws Exception {
-        if(student.getId()!=null && student.getId()>0){
-            if(this.studentRepository.findById(student.getId()).isPresent()) {
+        if (student.getId() != null && student.getId() > 0) {
+            if (this.studentRepository.findById(student.getId()).isPresent()) {
                 this.studentRepository.save(student);
                 return student;
-            }
-            else
+            } else
                 throw new Exception("Resource Not Found");
         }
-            Book java= new Book();
-            java.setIsbn("654321");
-            java.setName("Java2");
-            java.setAuthor("Uncle Bob");
-            student.setBook(java);
+        Book java = new Book();
+        java.setIsbn("654321");
+        java.setName("Java2");
+        java.setAuthor("Uncle Bob");
+        student.setBook(java);
 
-        Student createdStudent =   this.studentRepository.save(student);
+        OpLog opLog = new OpLog();
+        opLog.setOperation("CREATE_OR_UPDATE-STUDENT_WITH_BOOK");
+        opLog.setLogMessage("Student and Book Created! Book Name : " + java.getName() + ", Student Name : " + student.getName());
+
+        this.opLogRepository.save(opLog);
+
+        Student createdStudent = this.studentRepository.save(student);
         return createdStudent;
     }
 
@@ -50,7 +61,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student getById(Long studentId) throws Exception {
         Optional<Student> foundStudent = this.studentRepository.findById(studentId);
-        if(foundStudent.isPresent())
+        if (foundStudent.isPresent())
             return foundStudent.get();
         else
             throw new Exception("Resource Not Found");
@@ -59,7 +70,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteById(Long studentId) throws Exception {
         Optional<Student> foundStudent = this.studentRepository.findById(studentId);
-        if(foundStudent.isPresent())
+        if (foundStudent.isPresent())
             this.studentRepository.deleteById(studentId);
         else
             throw new Exception("Resource Not Found");
@@ -88,11 +99,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> getByNameAndSurname(String name, String surname) {
-        return this.studentRepository.findByNameAndSurname(name,surname);
+        return this.studentRepository.findByNameAndSurname(name, surname);
     }
 
     @Override
     public List<Student> getByNameOrSurname(String name, String surname) {
-        return this.studentRepository.findByNameOrSurname(name,surname);
+        return this.studentRepository.findByNameOrSurname(name, surname);
     }
 }

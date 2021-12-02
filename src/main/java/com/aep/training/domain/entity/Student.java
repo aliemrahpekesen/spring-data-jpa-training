@@ -16,6 +16,7 @@ public class Student {
 
     private String name;
 
+    @Column(nullable = false)
     private String surname;
 
     @OneToOne(cascade = CascadeType.ALL)
