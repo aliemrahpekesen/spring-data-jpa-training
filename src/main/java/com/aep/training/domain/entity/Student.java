@@ -1,8 +1,13 @@
 package com.aep.training.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
+@Table(name = "Students")
 public class Student {
 
     @Id
@@ -14,36 +19,6 @@ public class Student {
 
     @OneToOne
     @JoinColumn(name = "book_id",referencedColumnName = "id")
+    @JsonManagedReference
     private Book book;
-
-    public Student() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
 }

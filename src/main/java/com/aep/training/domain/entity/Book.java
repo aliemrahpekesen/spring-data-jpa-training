@@ -1,8 +1,13 @@
 package com.aep.training.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
+@Table(name = "Books")
 public class Book {
 
     @Id
@@ -14,36 +19,6 @@ public class Book {
     private String author;
 
     @OneToOne(mappedBy = "book")
+    @JsonBackReference
     private Student student;
-
-    public Book() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 }

@@ -36,7 +36,7 @@ public class StudentServiceImpl implements StudentService {
             java.setName("Java");
             java.setAuthor("Martin Fowler");
 
-            java = this.bookRepository.save(java);
+            this.bookRepository.save(java);
 
             student.setBook(java);
 
