@@ -75,4 +75,14 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getAllBySurname(String queryData) {
         return this.studentRepository.findAllBySurname(queryData);
     }
+
+    @Override
+    public List<Student> getByNameAndSurname(String name, String surname) {
+        return this.studentRepository.findByNameAndSurname(name,surname);
+    }
+
+    @Override
+    public List<Student> getByNameOrSurname(String name, String surname) {
+        return this.studentRepository.findByNameOrSurname(name,surname);
+    }
 }

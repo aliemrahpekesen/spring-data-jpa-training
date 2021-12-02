@@ -20,4 +20,8 @@ public interface StudentService {
     Student getByName(String queryData);
 
     List<Student> getAllBySurname(String queryData);
+
+    List<Student> getByNameAndSurname(String name,String surname);
+
+    List<Student> getByNameOrSurname(String name,String surname);
 }

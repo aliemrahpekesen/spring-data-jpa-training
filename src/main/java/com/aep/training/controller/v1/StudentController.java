@@ -1,16 +1,15 @@
 package com.aep.training.controller.v1;
 
+import com.aep.training.annotation.StudentApi;
 import com.aep.training.domain.entity.Student;
 import com.aep.training.service.StudentService;
-import com.aep.training.util.ApiConstant;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping(ApiConstant.ROOT+"/students")
-//@InnovaRequestMapping("/students") --> ÖDEV
+
+@StudentApi
 public class StudentController {
 
     private StudentService studentService;
@@ -38,12 +37,18 @@ public class StudentController {
     }
 
     @GetMapping("/search")
-    public List<Student> search(@RequestParam("sc") String searchCriteria,@RequestParam("q") String queryData) throws Exception {
+    public List<Student> search(@RequestParam("sc") String searchCriteria,
+                                @RequestParam(value = "name",required = false) String name,
+                                @RequestParam(value = "surname",required = false) String surname ) throws Exception {
         List<Student> resultList = new ArrayList<>();
         if("name".equals(searchCriteria)){
-            resultList.add(this.studentService.getByName(queryData));
+            resultList.add(this.studentService.getByName(name));
         } else if("surname".equals(searchCriteria)){
-            resultList =this.studentService.getAllBySurname(queryData);
+            resultList =this.studentService.getAllBySurname(surname);
+        }else if("nameandsurname".equals(searchCriteria)){
+            resultList =this.studentService.getByNameAndSurname(name,surname);
+        }else if("nameorsurname".equals(searchCriteria)){
+            resultList =this.studentService.getByNameOrSurname(name,surname);
         }
         return resultList;
     }

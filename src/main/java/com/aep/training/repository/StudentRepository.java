@@ -13,8 +13,8 @@ public interface StudentRepository extends CrudRepository<Student,Long> {
 
     List<Student> findAllBySurname(String queryData);
 
-    //byNameAndSurname
-    //byNameOrSurname
-
+    List<Student> findByNameAndSurname(String name,String surname);
+    
+    List<Student> findByNameOrSurname(String name,String surname);
 
 }
