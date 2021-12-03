@@ -6,8 +6,17 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "Books")
-public class Book {
+@Table(name="Books")
+public class Book extends MainEntity{
+
+    public Book() {
+    }
+
+    public Book(String isbn, String author,String name) {
+        super(name,"Test Datası");
+        this.isbn = isbn;
+        this.author = author;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
@@ -15,7 +24,6 @@ public class Book {
     private Long id;
 
     private String isbn;
-    private String name;
     private String author;
 
 }
