@@ -3,6 +3,7 @@ package com.aep.training.service.impl;
 import com.aep.training.domain.entity.Person;
 import com.aep.training.domain.model.PersonPage;
 import com.aep.training.domain.model.PersonSearchCriteria;
+import com.aep.training.domain.exception.ResourceNotFoundException;
 import com.aep.training.repository.PersonRepository;
 import com.aep.training.repository.PersonSearchRepository;
 import com.aep.training.service.PersonService;
@@ -36,7 +37,10 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Page<Person> search(PersonPage personPage, PersonSearchCriteria personSearchCriteria) {
+    public Page<Person> search(PersonPage personPage, PersonSearchCriteria personSearchCriteria) throws ResourceNotFoundException {
+        Page<Person> searchResults = this.personSearchRepository.searchByParameters(personPage, personSearchCriteria);
+        if(searchResults.getTotalElements()==0)
+            throw new ResourceNotFoundException("Hiç Sonuç Gelmedi!");
         return this.personSearchRepository.searchByParameters(personPage,personSearchCriteria);
     }
 }

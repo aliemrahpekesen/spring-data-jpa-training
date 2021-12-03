@@ -1,6 +1,7 @@
 package com.aep.training.controller.v1;
 
 import com.aep.training.domain.entity.Person;
+import com.aep.training.domain.exception.ResourceNotFoundException;
 import com.aep.training.domain.model.PersonPage;
 import com.aep.training.domain.model.PersonSearchCriteria;
 import com.aep.training.service.PersonService;
@@ -18,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/people")
 public class PersonController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PersonController.class);
-
     private final PersonService personService;
 
     public PersonController(PersonService personService) {
@@ -27,11 +26,8 @@ public class PersonController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Person>> search(PersonPage personPage, PersonSearchCriteria personSearchCriteria){
-        logger.info("Yeni bir search çalışacak");
+    public ResponseEntity<Page<Person>> search(PersonPage personPage, PersonSearchCriteria personSearchCriteria) throws ResourceNotFoundException {
         Page<Person> searchResult = this.personService.search(personPage,personSearchCriteria);
-        logger.info("Search result ı oluşturuldu");
-        logger.info("Toplam dönen result sayısı : "+searchResult.getTotalElements());
         return new ResponseEntity<>(searchResult, HttpStatus.OK);
     }
 
