@@ -23,7 +23,7 @@ public class DemoApplication {
     }
 
     @PostConstruct
-    public void biDirectionalTestCode(){
+    public void uniDirectionalTestCode(){
         Book book = new Book();
         book.setIsbn("123456789");
         book.setAuthor("Ahmet");
