@@ -2,6 +2,7 @@ package com.aep.training.controller.v1;
 
 import com.aep.training.domain.entity.Person;
 import com.aep.training.domain.model.PersonPage;
+import com.aep.training.domain.model.PersonSearchCriteria;
 import com.aep.training.service.PersonService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,10 @@ public class PersonController {
         this.personService = personService;
     }
 
-    // localhost:8080/people?sortDirection=ASC&sortBy=gender&pageSize=3&pageNumber=0
     @GetMapping
-    public ResponseEntity<Page<Person>> getAll(PersonPage personPage){
-        Page<Person> people = this.personService.getAll(personPage);
-        return new ResponseEntity<>(people, HttpStatus.OK);
+    public ResponseEntity<Page<Person>> search(PersonPage personPage, PersonSearchCriteria personSearchCriteria){
+        Page<Person> searchResult = this.personService.search(personPage,personSearchCriteria);
+        return new ResponseEntity<>(searchResult, HttpStatus.OK);
     }
+
 }
