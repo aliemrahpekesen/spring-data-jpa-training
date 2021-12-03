@@ -22,12 +22,14 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
+
     @PostConstruct
     public void biDirectionalTestCode(){
         Book book = new Book();
         book.setIsbn("123456789");
         book.setAuthor("Ahmet");
         book.setName("Hello World!");
+
         Student student = new Student();
         student.setName("Emrah");
         student.setSurname("PEKESEN");
@@ -41,6 +43,7 @@ public class DemoApplication {
         if(foundStudentOptional.isPresent()){
             Student foundStudent = foundStudentOptional.get();
             System.out.println("Student Info : "+foundStudent);
+
             Long studentBookId = foundStudent.getBook().getId();
             BookRepository bookRepository = context.getBean(BookRepository.class);
             Optional<Book> foundBookOptional = bookRepository.findById(studentBookId);
@@ -53,6 +56,9 @@ public class DemoApplication {
 
 
 
+
+
     }
+
 
 }

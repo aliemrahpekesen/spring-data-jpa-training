@@ -5,6 +5,7 @@ import com.aep.training.domain.entity.OpLog;
 import com.aep.training.domain.entity.Student;
 import com.aep.training.repository.OpLogRepository;
 import com.aep.training.service.LogService;
+import javafx.scene.canvas.GraphicsContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
